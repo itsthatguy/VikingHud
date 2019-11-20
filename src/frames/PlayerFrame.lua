@@ -1,3 +1,193 @@
+------------------------------------------------------------------------------------
+-- BuffFrame
+-- TODO: Refactor this into a new file
+-- TODO: Remove VHPlayerBuffs declaration at the top of this file
+------------------------------------------------------------------------------------
+local VHPlayerBuffs = {
+  buffbuttons = {}
+}
+
+local function GetEnchantInfo()
+  local hasMainHandEnchant, mainHandExpiration, mainHandCharges, mainHandEnchantID, hasOffHandEnchant, offHandExpiration, offHandCharges, offHandEnchantId = GetWeaponEnchantInfo()
+  local IDS = {
+    [1] = "Rockbiter 3",
+    [2] = "Frostbrand 1",
+    [3] = "Flametongue 3",
+    [4] = "Flametongue 2",
+    [5] = "Flametongue 1",
+    [6] = "Rockbiter 2",
+    [12] = "Frostbrand 2",
+    [29] = "Rockbiter 1",
+    [283] = "Windfury 1",
+    [284] = "Windfury 2",
+    [503] = "Rockbiter 4",
+    [523] = "Flametongue 4",
+    [524] = "Frostbrand 3",
+    [525] = "Windfury 3",
+    [683] = "Rockbiter 6",
+    [1663] = "Rockbiter 5",
+    [1664] = "Rockbiter 7",
+    [1665] = "Flametongue 5",
+    [1666] = "Flametongue 6",
+    [1667] = "Frostbrand 4",
+    [1668] = "Frostbrand 5",
+    [1669] = "Windfury 4",
+    [2632] = "Rockbiter 8",
+    [2633] = "Rockbiter 9",
+    [2634] = "Flametongue 7",
+    [2635] = "Frostbrand 6",
+    [2636] = "Windfury 5",
+  }
+
+  if (hasMainHandEnchant == true and IDS[mainHandEnchantID]) then
+    local enchantID = IDS[mainHandEnchantID]
+    local enchant = {}
+    return {
+      buff = enchantID,
+      icon = mainHandEnchantID,
+      duration = GetTime() - mainHandExpiration,
+      expTime = mainHandExpiration,
+      caster = "player",
+      spellId = enchantID,
+      target = "player"
+    }
+  else
+    return nil
+  end
+end
+
+local function GetBuffs(unitId, type)
+  local maxBuffCount = 32
+  local playerbuffs = { };
+
+  for i = 1, maxBuffCount do
+      local buff, icon, _, _, duration, expTime, caster, _, _, spellId = UnitAura(unitId, i, type);
+
+      if not buff then break; end
+
+      playerbuffs[i] = { };
+      playerbuffs[i]["buff"] = buff;
+      -- playerbuffs[i]["Rank"] = BUFFWATCHADDON.GetSpellRankText(spellId);
+      playerbuffs[i]["icon"] = icon;
+      playerbuffs[i]["duration"] = duration;
+      playerbuffs[i]["expTime"] = expTime;
+      playerbuffs[i]["caster"] = caster;
+      playerbuffs[i]["spellId"] = spellId;
+      playerbuffs[i].target = unitId
+      playerbuffs[i].index = index
+  end
+
+  if (hasMainHandEnchant == true) then
+    local enchant = GetEnchantInfo()
+    enchant.index = #playerbuffs+1
+
+    playerbuffs[enchant.index] = enchant
+  end
+
+  return playerbuffs;
+end
+
+function VHPlayerBuffs:CreatePlayerBuffs(buffs)
+  print("CreatePlayerBuffs:")
+  local buff = {}
+  local iconsize = 36
+  local iconxoffset = 5
+  for i,v in pairs(self.buffbuttons) do
+    v:Hide()
+  end
+  for i,v in pairs(buffs) do
+    local buffname = "VH_PLAYER_FRAME_BUFF_" .. v.spellId
+    buff.button = CreateFrame("Button", buffname, UIParent, "SecureActionButtonTemplate")
+    buff.button:EnableMouse(true)
+    buff.index = v.index
+    buff.button:SetID(v.spellId)
+    buff.button:SetPoint("TOPRIGHT", "VH_PLAYER_FRAME_BUFFS", "TOPRIGHT", (i == 1) and 0 or -(iconsize * (i-1)) - iconxoffset, 0)
+    buff.button:SetSize(iconsize, iconsize)
+    buff.button:SetNormalTexture(v.icon);
+    buff.cooldown = CreateFrame("Cooldown", buffname, buff.button, "CooldownFrameTemplate")
+    buff.cooldown:SetAllPoints()
+    buff.cooldown:SetReverse(true)
+    buff.cooldown:SetDrawEdge(false)
+    buff.cooldown:SetDrawBling(true)
+
+    local now = GetTime()
+    local duration = (v.expTime - now)
+    print(now, v.expTime, duration)
+    buff.cooldown:SetCooldown(now, duration)
+
+    buff.button:SetScript("OnEnter", function(this)
+      -- print(self.buffbuttons)
+      for index, vvv in pairs(self.buffbuttons) do
+        print(index)
+        for xxx,yyy in pairs(self.buffbuttons[index]) do
+            print(xxx)
+        end
+        -- for k, vv in pairs(self.buffbuttons[index]) do
+        --   print("value  -- ", k, vv)
+        -- end
+
+      end
+      -- for i,v in pairs(a.cooldown) do
+      --   print("a.cooldown  -- ", i, v)
+      -- end
+      print('GetId() -- ', this:GetID())
+      -- GameTooltip:SetUnitBuff(value.target, self.buffbuttons[this:GetID()].spellId)
+      GameTooltip:SetOwner(this, "ANCHOR_BOTTOMLEFT")
+      GameTooltip:AddLine("butt")
+      GameTooltip:Show()
+    end)
+
+    -- buffbutton:SetScript("OnLeave", function()
+    --   GameTooltip:Hide()
+    -- end)
+
+    -- buffbutton.icon = buffbutton:CreateTexture(nil, "ARTWORK")
+    -- buffbutton.icon:SetAllPoints(buffbutton)
+    buff.button:Show()
+
+    self.buffbuttons["BUFF_"..v.spellId] = buff
+  end
+  VH_BUFFS = self.buffbuttons
+end
+
+function VHPlayerBuffs:CreatePlayerDebuffs(buffs)
+  print("CreatePlayerDebuffs:", buffs[1].buff)
+  for i,v in pairs(buffs) do
+    local buffbutton = CreateFrame("Button", "VH_PLAYER_FRAME_BUFF_" .. v.SpellId, UIParent)
+    print(v.icon)
+  end
+end
+
+function VHPlayerBuffs:HandleBuffEvent(_event)
+  print("HandleBuffEvent")
+  local buffs = GetBuffs("player", "HELPFUL")
+  local debuffs = GetBuffs("player", "HARMFUL")
+
+  self:CreatePlayerBuffs(buffs)
+  -- self:CreatePlayerDebuffs(debuffs)
+end
+
+function VHPlayerBuffs:CreateBuffFrame()
+  local buffFrame = CreateFrame("Frame", VH_FRAMES.PLAYER_FRAME .. "_BUFFS", nil)
+  buffFrame:EnableMouse(false)
+  buffFrame:SetPoint("TOP", UIParent, "BOTTOM", 0, 200)
+  buffFrame:SetSize(900, 30)
+
+  -- remove this start
+  local texture = buffFrame:CreateTexture(nil, "BACKGROUND")
+  texture:SetAllPoints()
+  texture:SetColorTexture(1,1,1,.5)
+  -- remove this end
+  buffFrame:RegisterEvent("UNIT_AURA");
+  buffFrame:SetScript("OnEvent", function(_, event, target)
+    self:HandleBuffEvent(event, target, "HELPFUL")
+  end)
+  return buffFrame
+end
+
+------------------------------------------------------------------------------------
+-- PlayerFrame
+------------------------------------------------------------------------------------
 local VHPlayerFrame = {}
 
 -- target frames
