@@ -39,3 +39,8 @@ luac.out
 *.x86_64
 *.hex
 
+# Image Source files
+*.psd
+*.ai
+.vscode/launch.json
+.vscode/tasks.json

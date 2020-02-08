@@ -1,2 +1,2 @@
-# Vikinghug WOW Addon
+# VikingHud WOW Addon
 

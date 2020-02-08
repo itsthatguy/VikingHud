@@ -1,0 +1,21 @@
+<Ui xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+    <!-- Atoms -->
+    <Script file="Atoms\StatusBar.lua" />
+    <Script file="Atoms\Frame.lua" />
+
+    <!-- Global -->
+    <Script file="Colors.lua" />
+    <Script file="Settings.lua" />
+    <Script file="Options.lua" />
+    <Script file="Events.lua" />
+    <Script file="Core.lua" />
+    <Script file="AddonOverrides\masque_skin\masque.lua" />
+
+    <!-- Frames -->
+    <Script file="Frames\PlayerUnitFrame.lua" />
+    <Script file="Frames\PlayerCastFrame.lua" />
+    <Script file="Frames\PlayerHealthFrame.lua" />
+    <Script file="Frames\PlayerPowerFrame.lua" />
+
+    <Script file="Frames\TargetOfTargetUnitFrame.lua" />
+</Ui>
