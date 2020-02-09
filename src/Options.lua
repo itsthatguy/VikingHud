@@ -1,7 +1,7 @@
 local LSM = LibStub("LibSharedMedia-3.0")
-
 local addonName, addon = ...
 
+local L = LibStub('AceLocale-3.0'):GetLocale(addonName)
 local AceConfig = LibStub("AceConfig-3.0")
 local AceDBOptions = LibStub("AceDBOptions-3.0")
 local AceConfigDialog = LibStub("AceConfigDialog-3.0")
@@ -38,13 +38,13 @@ Options.primary = {
   args = {
 
     blah = {
-      name = "Bar Size and position",
+      name = L["Bar Size and position"],
       type = "header",
       order = 1
     },
 
     positionX = {
-  		name = 'Horizontal Postition',
+  		name = L['Horizontal Postition'],
   		type = 'range',
       order = 2,
       softMin = -400,
@@ -58,7 +58,7 @@ Options.primary = {
     },
 
     positionY = {
-  		name = 'Vertical Postition',
+  		name = L['Vertical Postition'],
   		type = 'range',
       order = 3,
       softMin = -400,
@@ -73,7 +73,7 @@ Options.primary = {
 
 
     targetNameY = {
-  		name = 'Target Text Vertical Postition',
+  		name = L['Target Text Vertical Postition'],
   		type = 'range',
       order = 3,
       softMin = -400,
@@ -88,7 +88,7 @@ Options.primary = {
 
 
     spacing = {
-      name = 'Horizonal Spacing',
+      name = L['Horizonal Spacing'],
       desc = "How much space between the left and right bars?",
   		type = 'range',
       order = 4,
@@ -103,7 +103,7 @@ Options.primary = {
 
 
     spacingY = {
-      name = 'Vertical Spacing',
+      name = L['Vertical Spacing'],
       desc = "How much space between the unit and target frames?",
   		type = 'range',
       order = 4,
@@ -117,7 +117,7 @@ Options.primary = {
     },
 
     width = {
-  		name = 'Frame Width',
+  		name = L['Frame Width'],
   		type = 'range',
       order = 4,
       softMin = 30,
@@ -130,7 +130,7 @@ Options.primary = {
     },
 
     height = {
-  		name = 'Bar Height',
+  		name = L['Bar Height'],
   		type = 'range',
       order = 5,
       softMin = 1,
@@ -144,13 +144,13 @@ Options.primary = {
 
 
     blah2 = {
-      name = "Font",
+      name = L["Font"],
       type = "header",
       order = 6
     },
 
     font = {
-      name = 'Font Family',
+      name = L['Font Family'],
       type = 'select',
       order = 7,
       sorting = function(values, ...)
@@ -173,7 +173,7 @@ Options.primary = {
     },
 
     fontSize = {
-  		name = 'Font Size',
+  		name = L['Font Size'],
   		type = 'range',
       order = 8,
       softMin = 4,
@@ -185,218 +185,227 @@ Options.primary = {
   		get = function(info) return addon.Settings.db.profile.fontSize end,
     },
 
-    modelOptions = {
 
-      name = "Model Options",
-      type = 'group',
+    -- distance = {
+    --   name = L['distance'],
+    --   type = 'range',
+    --   order = 4.5,
+    --   softMin = -100,
+    --   softMax = 100,
+    --   set = function(info, val)
+    --     local model = addon.targetUnitFrame.portrait
+    --     addon.Settings.db.profile.camera.distance = val
+    --     model:SetCameraDistance(addon.Settings.db.profile.camera.distance)
+    --   end,
+    --   get = function(info)
+    --     return addon.Settings.db.profile.camera.distance
+    --   end,
+    -- },
 
-      args = {
-        showPortrait = {
-          name = 'Show 3d target model',
-          type = 'toggle',
-          order = 0,
-          set = function(info, val)
-            addon.Settings.db.profile.showPortrait = val
-            addon.targetUnitFrame:TogglePortrait()
-          end,
-          get = function(info)
-            return addon.Settings.db.profile.showPortrait
-          end,
-        },
+  }
+}
 
-        camera = {
-          name = "Camera",
-          type = "header",
-          order = 1
-        },
+Options.portrait = {
+  name = L["Model Options"],
+  type = 'group',
+  args = {
 
-        x = {
-          name = 'x',
-          type = 'range',
-          order = 2,
-          softMin = -100,
-          softMax = 100,
-          set = function(info, val)
-            local model = addon.targetUnitFrame.portrait
-            addon.Settings.db.profile.camera.x = val
-            model:SetCameraPosition(addon.Settings.db.profile.camera.x, addon.Settings.db.profile.camera.y, addon.Settings.db.profile.camera.z)
-          end,
-          get = function(info)
-            return addon.Settings.db.profile.camera.x
-          end,
-        },
-        y = {
-          name = 'y',
-          type = 'range',
-          order = 3,
-          softMin = -100,
-          softMax = 100,
-          set = function(info, val)
-            local model = addon.targetUnitFrame.portrait
-            addon.Settings.db.profile.camera.y = val
-            model:SetCameraPosition(addon.Settings.db.profile.camera.x, addon.Settings.db.profile.camera.y, addon.Settings.db.profile.camera.z)
-          end,
-          get = function(info)
-            return addon.Settings.db.profile.camera.y
-          end,
-        },
-        z = {
-          name = 'z',
-          type = 'range',
-          order = 4,
-          softMin = -100,
-          softMax = 100,
-          set = function(info, val)
-            local model = addon.targetUnitFrame.portrait
-            addon.Settings.db.profile.camera.z = val
-            model:SetCameraPosition(addon.Settings.db.profile.camera.x, addon.Settings.db.profile.camera.y, addon.Settings.db.profile.camera.z)
-          end,
-          get = function(info)
-            return addon.Settings.db.profile.camera.z
-          end,
-        },
-        -- distance = {
-        --   name = 'distance',
-        --   type = 'range',
-        --   order = 4.5,
-        --   softMin = -100,
-        --   softMax = 100,
-        --   set = function(info, val)
-        --     local model = addon.targetUnitFrame.portrait
-        --     addon.Settings.db.profile.camera.distance = val
-        --     model:SetCameraDistance(addon.Settings.db.profile.camera.distance)
-        --   end,
-        --   get = function(info)
-        --     return addon.Settings.db.profile.camera.distance
-        --   end,
-        -- },
+    showPortrait = {
+      name = L['Show Target 3D Portrait'],
+      type = 'toggle',
+      order = 9,
+      set = function(info, val)
+        addon.Settings.db.profile.showPortrait = val
+        addon.targetUnitFrame:TogglePortrait()
+      end,
+      get = function(info)
+        return addon.Settings.db.profile.showPortrait
+      end,
+    },
 
-        model = {
-          name = "Model",
-          type = "header",
-          order = 5
-        },
-        posx = {
-          name = 'x',
-          type = 'range',
-          order = 6,
-          softMin = -100,
-          softMax = 100,
-          set = function(info, val)
-            local model = addon.targetUnitFrame.portrait
-            addon.Settings.db.profile.model.x = val
-            model:SetPosition(addon.Settings.db.profile.model.x, addon.Settings.db.profile.model.y, addon.Settings.db.profile.model.z)
-          end,
-          get = function(info)
-            return addon.Settings.db.profile.model.x
-          end,
-        },
-        posy = {
-          name = 'y',
-          type = 'range',
-          order = 7,
-          softMin = -100,
-          softMax = 100,
-          set = function(info, val)
-            local model = addon.targetUnitFrame.portrait
-            addon.Settings.db.profile.model.y = val
-            model:SetPosition(addon.Settings.db.profile.model.x, addon.Settings.db.profile.model.y, addon.Settings.db.profile.model.z)
-          end,
-          get = function(info)
-            return addon.Settings.db.profile.model.y
-          end,
-        },
-        posz = {
-          name = 'z',
-          type = 'range',
-          order = 8,
-          softMin = -100,
-          softMax = 100,
-          set = function(info, val)
-            local model = addon.targetUnitFrame.portrait
-            addon.Settings.db.profile.model.z = val
-            model:SetPosition(addon.Settings.db.profile.model.x, addon.Settings.db.profile.model.y, addon.Settings.db.profile.model.z)
-          end,
-          get = function(info)
-            return addon.Settings.db.profile.model.z
-          end,
-        },
+    camera = {
+      name = L["Camera"],
+      type = "header",
+      order = 9.1
+    },
 
-        scale = {
-          name = 'scale',
-          type = 'range',
-          order = 9,
-          softMin = -10,
-          softMax = 10,
-          set = function(info, val)
-            local model = addon.targetUnitFrame.portrait
-            addon.Settings.db.profile.model.scale = val
-            model:SetPortraitZoom(addon.Settings.db.profile.model.scale)
-          end,
-          get = function(info)
-            return addon.Settings.db.profile.model.scale
-          end,
-        },
+    x = {
+      name = L['x'],
+      type = 'range',
+      order = 9.2,
+      softMin = -100,
+      softMax = 100,
+      set = function(info, val)
+        local model = addon.targetUnitFrame.portrait
+        addon.Settings.db.profile.camera.x = val
+        model:SetCameraPosition(addon.Settings.db.profile.camera.x, addon.Settings.db.profile.camera.y, addon.Settings.db.profile.camera.z)
+      end,
+      get = function(info)
+        return addon.Settings.db.profile.camera.x
+      end,
+    },
+    y = {
+      name = L['y'],
+      type = 'range',
+      order = 9.3,
+      softMin = -100,
+      softMax = 100,
+      set = function(info, val)
+        local model = addon.targetUnitFrame.portrait
+        addon.Settings.db.profile.camera.y = val
+        model:SetCameraPosition(addon.Settings.db.profile.camera.x, addon.Settings.db.profile.camera.y, addon.Settings.db.profile.camera.z)
+      end,
+      get = function(info)
+        return addon.Settings.db.profile.camera.y
+      end,
+    },
+    z = {
+      name = L['z'],
+      type = 'range',
+      order = 9.4,
+      softMin = -100,
+      softMax = 100,
+      set = function(info, val)
+        local model = addon.targetUnitFrame.portrait
+        addon.Settings.db.profile.camera.z = val
+        model:SetCameraPosition(addon.Settings.db.profile.camera.x, addon.Settings.db.profile.camera.y, addon.Settings.db.profile.camera.z)
+      end,
+      get = function(info)
+        return addon.Settings.db.profile.camera.z
+      end,
+    },
 
-        rotation = {
-          name = 'rotation',
-          type = 'range',
-          order = 10,
-          min = 0,
-          max = math.rad(360),
-          set = function(info, val)
-            local model = addon.targetUnitFrame.portrait
-            addon.Settings.db.profile.model.rotation = val
-            model:SetFacing(addon.Settings.db.profile.model.rotation)
-          end,
-          get = function(info)
-            return addon.Settings.db.profile.model.rotation
-          end,
-        },
+    model = {
+      name = L["Model"],
+      type = "header",
+      order = 9.5
+    },
 
-        pitch = {
-          name = 'pitch',
-          type = 'range',
-          order = 11,
-          min = 0,
-          max = math.rad(360),
-          set = function(info, val)
-            local model = addon.targetUnitFrame.portrait
-            addon.Settings.db.profile.model.pitch = val
-            model:SetPitch(addon.Settings.db.profile.model.pitch)
-          end,
-          get = function(info)
-            return addon.Settings.db.profile.model.pitch
-          end,
-        },
+    posx = {
+      name = L['x'],
+      type = 'range',
+      order = 9.6,
+      softMin = -100,
+      softMax = 100,
+      set = function(info, val)
+        local model = addon.targetUnitFrame.portrait
+        addon.Settings.db.profile.model.x = val
+        model:SetPosition(addon.Settings.db.profile.model.x, addon.Settings.db.profile.model.y, addon.Settings.db.profile.model.z)
+      end,
+      get = function(info)
+        return addon.Settings.db.profile.model.x
+      end,
+    },
 
-        animation = {
-          name = 'animation',
-          type = 'range',
-          order = 11,
-          min = 0,
-          max = 208,
-          step = 1,
-          set = function(info, val)
-            local model = addon.targetUnitFrame.portrait
-            addon.Settings.db.profile.model.animation = val
-            model:SetAnimation(addon.Settings.db.profile.model.animation)
-          end,
-          get = function(info)
-            return addon.Settings.db.profile.model.animation
-          end,
-        },
-      }
-    }
+    posy = {
+      name = L['y'],
+      type = 'range',
+      order = 9.7,
+      softMin = -100,
+      softMax = 100,
+      set = function(info, val)
+        local model = addon.targetUnitFrame.portrait
+        addon.Settings.db.profile.model.y = val
+        model:SetPosition(addon.Settings.db.profile.model.x, addon.Settings.db.profile.model.y, addon.Settings.db.profile.model.z)
+      end,
+      get = function(info)
+        return addon.Settings.db.profile.model.y
+      end,
+    },
+
+    posz = {
+      name = L['z'],
+      type = 'range',
+      order = 9.8,
+      softMin = -100,
+      softMax = 100,
+      set = function(info, val)
+        local model = addon.targetUnitFrame.portrait
+        addon.Settings.db.profile.model.z = val
+        model:SetPosition(addon.Settings.db.profile.model.x, addon.Settings.db.profile.model.y, addon.Settings.db.profile.model.z)
+      end,
+      get = function(info)
+        return addon.Settings.db.profile.model.z
+      end,
+    },
+
+    scale = {
+      name = L['Scale'],
+      type = 'range',
+      order = 9.9,
+      softMin = -10,
+      softMax = 10,
+      set = function(info, val)
+        local model = addon.targetUnitFrame.portrait
+        addon.Settings.db.profile.model.scale = val
+        model:SetPortraitZoom(addon.Settings.db.profile.model.scale)
+      end,
+      get = function(info)
+        return addon.Settings.db.profile.model.scale
+      end,
+    },
+
+    rotation = {
+      name = L['Rotation'],
+      type = 'range',
+      order = 9.10,
+      min = 0,
+      max = math.rad(360),
+      set = function(info, val)
+        local model = addon.targetUnitFrame.portrait
+        addon.Settings.db.profile.model.rotation = val
+        model:SetFacing(addon.Settings.db.profile.model.rotation)
+      end,
+      get = function(info)
+        return addon.Settings.db.profile.model.rotation
+      end,
+    },
+
+    pitch = {
+      name = L['Pitch'],
+      type = 'range',
+      order = 9.11,
+      min = 0,
+      max = math.rad(360),
+      set = function(info, val)
+        local model = addon.targetUnitFrame.portrait
+        addon.Settings.db.profile.model.pitch = val
+        model:SetPitch(addon.Settings.db.profile.model.pitch)
+      end,
+      get = function(info)
+        return addon.Settings.db.profile.model.pitch
+      end,
+    },
+
+    animation = {
+      name = L['Animation'],
+      type = 'range',
+      order = 9.12,
+      min = 0,
+      max = 208,
+      step = 1,
+      set = function(info, val)
+        local model = addon.targetUnitFrame.portrait
+        addon.Settings.db.profile.model.animation = val
+        model:SetAnimation(addon.Settings.db.profile.model.animation)
+      end,
+      get = function(info)
+        return addon.Settings.db.profile.model.animation
+      end,
+    },
   }
 }
 
 function Options:OnLoad()
   AceConfig:RegisterOptionsTable(addonName, addon.Options.primary, { "vikinghud", "vh" })
   AceConfigDialog:AddToBlizOptions(addonName, addonName)
+
   local profiles = AceDBOptions:GetOptionsTable(addon.Settings.db)
   AceConfig:RegisterOptionsTable(addonName .. ".profiles", profiles)
   AceConfigDialog:AddToBlizOptions(addonName .. ".profiles", "Profiles", addonName)
+
+  AceConfig:RegisterOptionsTable(addonName .. ".portrait", Options.portrait)
+  AceConfigDialog:AddToBlizOptions(addonName .. ".portrait", "Target Portrait", addonName)
 
   --@debug@
   -- AceConfig:RegisterOptionsTable(addonName .. ".model", modelOptions, {"model"})
