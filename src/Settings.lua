@@ -1,8 +1,6 @@
 local addonName, addon = ...
 
 local LSM = LibStub("LibSharedMedia-3.0")
-local Console = LibStub("AceConsole-3.0")
-local L = LibStub('AceLocale-3.0'):GetLocale(addonName)
 local Settings = {}; addon.Settings = Settings
 
 function Settings:GetDatabaseDefaults()
@@ -56,7 +54,6 @@ function Settings:RefreshSettings()
   model:SetFacing(addon.Settings.db.profile.model.rotation)
   model:SetPortraitZoom(addon.Settings.db.profile.model.scale)
   model:SetPosition(addon.Settings.db.profile.model.x, addon.Settings.db.profile.model.y, addon.Settings.db.profile.model.z)
-  -- model:SetCameraDistance(addon.Settings.db.profile.camera.distance)
   model:SetCameraPosition(addon.Settings.db.profile.camera.x, addon.Settings.db.profile.camera.y, addon.Settings.db.profile.camera.z)
   addon:UpdateFont()
   addon:UpdateSize()
