@@ -13,8 +13,8 @@ function PlayerHealthFrame:New(parent, side, unitID)
   frame.unitID = unitID
   frame.statusBar = addon.StatusBar:New(frame, side)
 
-  frame.statusBar:SetBackdropColor(VSL.Colors:NewRGBA(VSL.Colors.BG, 0.8):ToList())
-  frame.statusBar:SetBarColor(VSL.Colors:NewRGBA(VSL.Colors.RED, 1.0):ToList())
+  frame.statusBar:SetBackdropColor(VSL.Colors.BG:ToList(0.8))
+  frame.statusBar:SetBarColor(VSL.Colors.RED:ToList(1.0))
   return frame
 end
 

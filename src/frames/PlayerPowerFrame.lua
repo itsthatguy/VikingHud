@@ -23,15 +23,15 @@ function PlayerPowerFrame:New(parent, side, unitID, powerType)
   local color
 
   if powerType == MANA then
-    color = VSL.Colors:NewRGBA(VSL.Colors.BLUE, 1.0)
+    color = VSL.Colors.BLUE
   elseif powerType == RAGE then
-    color = VSL.Colors:NewRGBA(VSL.Colors.ORANGE, 1.0)
+    color = VSL.Colors.ORANGE
   elseif powerType == ENERGY then
-    color = VSL.Colors:NewRGBA(VSL.Colors.YELLOW, 1.0)
+    color = VSL.Colors.YELLOW
   end
 
-  frame.statusBar:SetBarColor(color:ToList())
-  frame.statusBar:SetBackdropColor(VSL.Colors:NewRGBA(VSL.Colors.BG, 0.8):ToList())
+  frame.statusBar:SetBarColor(color:ToList(1.0))
+  frame.statusBar:SetBackdropColor(VSL.Colors.BG:ToList(0.8))
   frame:Hide()
 
   return frame
