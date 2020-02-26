@@ -1,6 +1,6 @@
 ## Interface: 11303
 ## Title: Viking HUD
-## Notes: Vikinghug is your King!
+## Notes: Minimal player/target frames, designed for those that appreciate good UX/Design
 ## Author: Vikinghug
 ## Version: 0.1.5
 ## Dependencies: VikingSharedLib
