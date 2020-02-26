@@ -21,16 +21,24 @@ L.ActionBarDisplayName = "Action Bar %s"
 L['Bar Size and position'] = 'Bar Size and position'
 L['Horizontal Postition'] = 'Horizontal Postition'
 L['Vertical Postition'] = 'Vertical Postition'
+
+-- Font Shit
+L["Font & Text Settings"] = "Font & Text Settings"
+L['Font Family'] = 'Global Font Family'
 L['Target Text Vertical Postition'] = 'Target Text Vertical Postition'
+L['Target Font Size'] = 'Target Font Size'
+L['Target of Target Font Size'] = 'Target of Target Font Size'
+L['Bars Font Size'] = 'Bars Font Size'
+
+-- Bar size & position
 L['Horizonal Spacing'] = 'Horizonal Spacing'
 L['How much space between the left and right bars?'] = 'How much space between the left and right bars?'
 L['Vertical Spacing'] = 'Vertical Spacing'
 L['How much space between the unit and target frames?'] = 'How much space between the unit and target frames?'
 L['Frame Width'] = 'Frame Width'
 L['Bar Height'] = 'Bar Height'
-L["Font"] = "Font"
-L['Font Family'] = 'Font Family'
-L['Font Size'] = 'Font Size'
+
+-- Camera Shit
 L['Model Options'] = 'Model Options'
 L['Show Target 3D Portrait'] = 'Show Target 3D Portrait'
 L['Camera'] = 'Camera'

@@ -17,6 +17,11 @@ function Settings:GetDatabaseDefaults()
 
       target = {
         nameY = 54,
+        fontSize = 16,
+      },
+
+      targetTarget = {
+        fontSize = 16,
       },
 
       showPortrait = true,

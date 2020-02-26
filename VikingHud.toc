@@ -1,13 +1,10 @@
 ## Interface: 11303
 ## Title: VikingHud!
 ## Notes: Vikinghug is your King!
-## Dependencies:
+## Dependencies: VikingSharedLib
 ## SavedVariablesPerCharacter: VikingHudDB
-## Version: 0.1.1
+## Version: 0.1.2
 
 libs\Libs.xml
-assets\fonts\fonts.lua
-assets\textures\textures.lua
-
 src\localization\localization.xml
 src\Code.xml

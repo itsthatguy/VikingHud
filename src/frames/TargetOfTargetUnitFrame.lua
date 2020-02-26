@@ -1,4 +1,5 @@
-local LSM = LibStub("LibSharedMedia-3.0")
+-- local LSM = LibStub("LibSharedMedia-3.0")
+local VSL = LibStub("VikingSharedLib")
 local Taka = LibStub("Taka-0.0")
 
 local addonName, addon = ...
@@ -6,7 +7,8 @@ local TargetUnitFrameBase = {}
 local TargetUnitFrame = {}; addon.TargetUnitFrame = TargetUnitFrame
 
 local function new(parent, side, unitID)
-  local frame = CreateFrame("Button", "VH_TargetTargetFrame", parent, "SecureActionButtonTemplate")
+  local frame = CreateFrame("Button", "VH_TargetTargetFrame", parent, "SecureUnitButtonTemplate")
+  VSL:ApplyMixin(frame, TargetUnitFrameBase)
   frame.unitID = unitID
   frame:EnableMouse(true)
   frame:RegisterForClicks("LeftButtonUp", "RightButtonUp")
@@ -35,13 +37,25 @@ local function new(parent, side, unitID)
   --   bgFile = LSM:Fetch("background", "Solid"),
   --   insets = { left = -1, right = -1, top = -1, bottom = -1}
   -- })
-  -- frame:SetBackdropColor(addon.Colors:NewRGBA(addon.Colors.GREEN, 0.8):ToList())
+  -- frame:SetBackdropColor(VSL.Colors:NewRGBA(VSL.Colors.GREEN, 0.8):ToList())
   --@debug end@
 
   frame.health = addon.PlayerHealthFrame:New(frame.container, "RIGHT", frame.unitID)
   frame.mana = addon.PlayerPowerFrame:New(frame.container, "RIGHT", frame.unitID, 0)
   frame.energy = addon.PlayerPowerFrame:New(frame.container, "RIGHT", frame.unitID, 3)
   frame.rage = addon.PlayerPowerFrame:New(frame.container, "RIGHT", frame.unitID, 1)
+
+  frame.targetText = frame.container:CreateFontString(nil, "OVERLAY")
+  frame.targetText:SetJustifyH("LEFT")
+  frame.targetText:SetFont(addon.Settings.db.profile.font, addon.Settings.db.profile.targetTarget.fontSize)
+  frame.targetText:SetPoint(
+    "BOTTOMLEFT",
+    frame.container,
+    "TOPLEFT",
+    0,
+    addon.Settings.db.profile.target.nameY
+  )
+  frame.targetText:SetText("")
 
   frame:EnableMouse(true)
   frame:SetDontSavePosition(true)
@@ -51,12 +65,15 @@ end
 
 function TargetUnitFrame:New(...)
   local frame = new(...)
-  addon.Helpers:ApplyMixin(frame, TargetUnitFrameBase)
 
   frame:UpdateVisibility()
   frame:Update()
 
   return frame
+end
+
+function TargetUnitFrameBase:SetTargetText(txt)
+  self.targetText:SetText(txt)
 end
 
 local MANA = 0
@@ -164,10 +181,12 @@ function TargetUnitFrameBase:UpdateSize()
   self.mana:SetSize(width, height)
   self.energy:SetSize(width, height)
   self.rage:SetSize(width, height)
-  self:SetSize(
-    addon.Settings.db.profile.width,
-    addon.Settings.db.profile.height + addon.Settings.db.profile.fontSize + 4
-  )
+  if not InCombatLockdown() then
+    self:SetSize(
+      addon.Settings.db.profile.width,
+      addon.Settings.db.profile.height + addon.Settings.db.profile.fontSize + 4
+    )
+  end
   -- self.health:SetPoint("TOP", self.container, "TOP", 10, 0)
   -- self.mana:SetPoint("TOP", self.container, "TOP", 10, 0)
   -- self.energy:SetPoint("TOP", self.container, "TOP", 10, 0)
@@ -180,4 +199,5 @@ function TargetUnitFrameBase:UpdateFont()
   self.mana:UpdateFont()
   self.energy:UpdateFont()
   self.rage:UpdateFont()
+  self.targetText:SetFont(addon.Settings.db.profile.font, addon.Settings.db.profile.targetTarget.fontSize)
 end

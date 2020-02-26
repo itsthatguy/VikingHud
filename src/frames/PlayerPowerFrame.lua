@@ -1,4 +1,5 @@
 local LSM = LibStub("LibSharedMedia-3.0")
+local VSL = LibStub("VikingSharedLib")
 local Taka = LibStub("Taka-0.0")
 
 local addonName, addon = ...
@@ -22,15 +23,15 @@ function PlayerPowerFrame:New(parent, side, unitID, powerType)
   local color
 
   if powerType == MANA then
-    color = addon.Colors:NewRGBA(addon.Colors.BLUE, 1.0)
+    color = VSL.Colors:NewRGBA(VSL.Colors.BLUE, 1.0)
   elseif powerType == RAGE then
-    color = addon.Colors:NewRGBA(addon.Colors.ORANGE, 1.0)
+    color = VSL.Colors:NewRGBA(VSL.Colors.ORANGE, 1.0)
   elseif powerType == ENERGY then
-    color = addon.Colors:NewRGBA(addon.Colors.YELLOW, 1.0)
+    color = VSL.Colors:NewRGBA(VSL.Colors.YELLOW, 1.0)
   end
 
   frame.statusBar:SetBarColor(color:ToList())
-  frame.statusBar:SetBackdropColor(addon.Colors:NewRGBA(addon.Colors.BG, 0.8):ToList())
+  frame.statusBar:SetBackdropColor(VSL.Colors:NewRGBA(VSL.Colors.BG, 0.8):ToList())
   frame:Hide()
 
   return frame

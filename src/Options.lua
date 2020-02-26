@@ -37,6 +37,91 @@ Options.primary = {
   type = 'group',
   args = {
 
+
+    font = {
+      name = L["Font & Text Settings"],
+      type = "header",
+      order = 0.1
+    },
+
+    fontFamily = {
+      name = L['Font Family'],
+      type = 'select',
+      order = 0.11,
+      sorting = function(values, ...)
+        local keys = {}
+        for _, v in spairs(LSM:HashTable("font")) do table.insert(keys, v) end
+        return keys
+      end,
+      values = function()
+        local values = {}
+        for k, v in pairs(LSM:HashTable("font")) do
+          values[v] = k
+        end
+        return values
+      end,
+      set = function(info, val)
+        addon.Settings.db.profile.font = val
+        addon:UpdateFont()
+      end,
+      get = function(info) return addon.Settings.db.profile.font end,
+    },
+
+    targetNameY = {
+  		name = L['Target Text Vertical Postition'],
+  		type = 'range',
+      order = 0.2,
+      softMin = -400,
+      softMax = 400,
+  		-- desc = '',
+      set = function(info, val)
+        addon.Settings.db.profile.target.nameY = val
+        addon:UpdateSize()
+      end,
+  		get = function(info) return addon.Settings.db.profile.target.nameY end,
+    },
+
+    targetFontSize = {
+  		name = L['Target Font Size'],
+  		type = 'range',
+      order = 0.3,
+      softMin = 4,
+      softMax = 46,
+      set = function(info, val)
+        addon.Settings.db.profile.target.fontSize = val
+        addon:UpdateFont()
+      end,
+  		get = function(info) return addon.Settings.db.profile.target.fontSize end,
+    },
+
+    targetTargetFontSize = {
+  		name = L['Target of Target Font Size'],
+  		type = 'range',
+      order = 0.4,
+      softMin = 4,
+      softMax = 46,
+      set = function(info, val)
+        addon.Settings.db.profile.targetTarget.fontSize = val
+        addon:UpdateFont()
+      end,
+  		get = function(info) return addon.Settings.db.profile.targetTarget.fontSize end,
+    },
+
+    barFontSize = {
+  		name = L['Bars Font Size'],
+  		type = 'range',
+      order = 0.5,
+      softMin = 4,
+      softMax = 46,
+      set = function(info, val)
+        addon.Settings.db.profile.fontSize = val
+        addon:UpdateFont()
+      end,
+  		get = function(info) return addon.Settings.db.profile.fontSize end,
+    },
+
+    ----------------------------------------------------------------------
+
     blah = {
       name = L["Bar Size and position"],
       type = "header",
@@ -69,21 +154,6 @@ Options.primary = {
         addon:UpdatePosition()
       end,
   		get = function(info) return addon.Settings.db.profile.positionY end,
-    },
-
-
-    targetNameY = {
-  		name = L['Target Text Vertical Postition'],
-  		type = 'range',
-      order = 3,
-      softMin = -400,
-      softMax = 400,
-  		-- desc = '',
-      set = function(info, val)
-        addon.Settings.db.profile.target.nameY = val
-        addon:UpdateSize()
-      end,
-  		get = function(info) return addon.Settings.db.profile.target.nameY end,
     },
 
 
@@ -141,50 +211,6 @@ Options.primary = {
       end,
   		get = function(info) return addon.Settings.db.profile.height end,
     },
-
-
-    blah2 = {
-      name = L["Font"],
-      type = "header",
-      order = 6
-    },
-
-    font = {
-      name = L['Font Family'],
-      type = 'select',
-      order = 7,
-      sorting = function(values, ...)
-        local keys = {}
-        for _, v in spairs(LSM:HashTable("font")) do table.insert(keys, v) end
-        return keys
-      end,
-      values = function()
-        local values = {}
-        for k, v in pairs(LSM:HashTable("font")) do
-          values[v] = k
-        end
-        return values
-      end,
-      set = function(info, val)
-        addon.Settings.db.profile.font = val
-        addon:UpdateFont()
-      end,
-      get = function(info) return addon.Settings.db.profile.font end,
-    },
-
-    fontSize = {
-  		name = L['Font Size'],
-  		type = 'range',
-      order = 8,
-      softMin = 4,
-      softMax = 46,
-      set = function(info, val)
-        addon.Settings.db.profile.fontSize = val
-        addon:UpdateFont()
-      end,
-  		get = function(info) return addon.Settings.db.profile.fontSize end,
-    },
-
 
     -- distance = {
     --   name = L['distance'],

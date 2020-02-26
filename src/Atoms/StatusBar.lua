@@ -1,4 +1,5 @@
 local LSM = LibStub("LibSharedMedia-3.0")
+local VSL = LibStub("VikingSharedLib")
 local Taka = LibStub("Taka-0.0")
 
 local addonName, addon = ...
@@ -24,12 +25,6 @@ function StatusBar:New(parent, side, textSide)
   statusBar.min = 0
   statusBar.max = 0
 
-  statusBar.currentText = statusBar:CreateFontString(nil, "Artwork")
-  statusBar.currentText:SetJustifyH(dirPoint)
-  statusBar.currentText:SetFont(addon.Settings.db.profile.font, addon.Settings.db.profile.fontSize)
-  statusBar.currentText:SetPoint("TOP" .. dirPoint, statusBar, "BOTTOM" .. dirPoint, 0, -4)
-  statusBar.currentText:SetText("")
-
   -- statusBar.divider = addon.Frame:New(statusBar)
   -- statusBar.divider:SetSize(16, 2)
   -- statusBar.divider:SetBackdrop({
@@ -37,13 +32,20 @@ function StatusBar:New(parent, side, textSide)
   --   insets = { left = 0, right = 0, top = 0, bottom = 0}
   -- })
   -- statusBar.divider:SetPoint("TOP", statusBar.currentText, "BOTTOM", 0, 0)
-  -- statusBar.divider:SetBackdropColor(addon.Colors:NewRGBA(addon.Colors.BG, 0.5):ToList())
+  -- statusBar.divider:SetBackdropColor(VSL.Colors:NewRGBA(VSL.Colors.BG, 0.5):ToList())
 
   statusBar.maxText = statusBar:CreateFontString(nil, "Artwork")
   statusBar.maxText:SetJustifyH(dirPointRelative)
-  statusBar.maxText:SetFont(addon.Settings.db.profile.font, addon.Settings.db.profile.fontSize * 0.8)
-  statusBar.maxText:SetPoint("BOTTOM" .. dirPoint, statusBar.currentText, "BOTTOM" .. dirPointRelative, 4 * dirMod, 1)
+  statusBar.maxText:SetFont(addon.Settings.db.profile.font, addon.Settings.db.profile.fontSize * 0.6)
+  statusBar.maxText:SetPoint("TOP" .. dirPointRelative, statusBar, "BOTTOM" .. dirPointRelative, 0, -2)
   statusBar.maxText:SetText("")
+
+  statusBar.currentText = statusBar:CreateFontString(nil, "Artwork")
+  statusBar.currentText:SetJustifyH(dirPoint)
+  statusBar.currentText:SetFont(addon.Settings.db.profile.font, addon.Settings.db.profile.fontSize)
+  statusBar.currentText:SetPoint("TOP" .. dirPoint, statusBar, "BOTTOM" .. dirPoint, 0, -2)
+  statusBar.currentText:SetText("")
+
   statusBar:Register()
 
   return statusBar

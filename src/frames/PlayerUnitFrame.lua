@@ -1,8 +1,9 @@
-local LSM = LibStub("LibSharedMedia-3.0")
+-- local LSM = LibStub("LibSharedMedia-3.0")
+-- local VSL = LibStub("VikingSharedLib")
 local Taka = LibStub("Taka-0.0")
 
 local addonName, addon = ...
-local PlayerUnitFrame = Taka:NewClass("Button", "VH_UnitFrame", "SecureActionButtonTemplate")
+local PlayerUnitFrame = Taka:NewClass("Button", "VH_UnitFrame", "SecureUnitButtonTemplate")
 addon.PlayerUnitFrame = PlayerUnitFrame
 
 function PlayerUnitFrame:New(parent, side, unitID)
@@ -49,7 +50,7 @@ function PlayerUnitFrame:New(parent, side, unitID)
     --   bgFile = LSM:Fetch("background", "Solid"),
     --   insets = { left = -1, right = -1, top = -1, bottom = -1}
     -- })
-    -- frame:SetBackdropColor(addon.Colors:NewRGBA(addon.Colors[unitID == "target" and "CYAN" or "YELLOW"], 0.8):ToList())
+    -- frame:SetBackdropColor(VSL.Colors:NewRGBA(VSL.Colors[unitID == "target" and "CYAN" or "YELLOW"], 0.8):ToList())
     --@debug end@
 
   if (unitID == "target") then
@@ -77,9 +78,11 @@ function PlayerUnitFrame:New(parent, side, unitID)
 
     frame.targetText = frame.container:CreateFontString(nil, "OVERLAY")
     frame.targetText:SetJustifyH("CENTER")
-    frame.targetText:SetFont(addon.Settings.db.profile.font, addon.Settings.db.profile.fontSize * 1.25)
+    frame.targetText:SetFont(addon.Settings.db.profile.font, addon.Settings.db.profile.target.fontSize)
     frame.targetText:SetPoint("BOTTOM", frame.container, "TOP", 0, addon.Settings.db.profile.target.nameY)
     frame.targetText:SetText("")
+    frame.targetText:SetWidth(addon.Settings.db.profile.spacing - 40)
+    frame.targetText:SetNonSpaceWrap(true)
     frame:TogglePortrait()
   end
 
@@ -251,11 +254,13 @@ function PlayerUnitFrame:UpdateSize()
   self.rage:SetSize(powerWidth, height)
 
   local frameHeight = addon.Settings.db.profile.height + addon.Settings.db.profile.fontSize + 4
-  self:SetSize(
-    (addon.Settings.db.profile.width * 2) + addon.Settings.db.profile.spacing,
-    frameHeight
-  )
-  self:SetPoint("TOP", self:GetParent(), "TOP", 0, self.unitID == "target" and frameHeight + addon.Settings.db.profile.spacingY or 0)
+  if not InCombatLockdown() then
+    self:SetSize(
+      (addon.Settings.db.profile.width * 2) + addon.Settings.db.profile.spacing,
+      frameHeight
+    )
+    self:SetPoint("TOP", self:GetParent(), "TOP", 0, self.unitID == "target" and frameHeight + addon.Settings.db.profile.spacingY or 0)
+  end
   if (self.unitID == "target") then
     self.targetText:SetPoint("BOTTOM", self.container, "TOP", 0, addon.Settings.db.profile.target.nameY)
   end
@@ -266,7 +271,7 @@ end
 
 function PlayerUnitFrame:UpdateFont()
   if (self.targetText) then
-    self.targetText:SetFont(addon.Settings.db.profile.font, addon.Settings.db.profile.fontSize)
+    self.targetText:SetFont(addon.Settings.db.profile.font, addon.Settings.db.profile.target.fontSize)
   end
   self.health:UpdateFont()
   self.mana:UpdateFont()

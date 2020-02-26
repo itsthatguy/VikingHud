@@ -17,4 +17,3 @@ L.ProfileCopied = '已從 "%s" 複製設定'
 L.ProfileReset = '重置設定檔 "%s"'
 L.CantDeleteCurrentProfile = '無法刪除目前的設定檔'
 L.InvalidProfile = '無效的設定檔 "%s"'
-L.ActionBarDisplayName = "快捷列 %s"

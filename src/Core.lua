@@ -1,32 +1,15 @@
 local LSM = LibStub("LibSharedMedia-3.0")
+local VSL = LibStub("VikingSharedLib")
 local Taka = LibStub("Taka-0.0")
 local MainFrame = Taka:NewClass("Frame", "VH_MainFrame")
 
 local addonName, addon = ...
-local Helpers = {}; addon.Helpers = Helpers
-
-function Helpers:ApplyMixin(base, mixin)
-  for k, v in pairs(mixin) do
-    base[k] = v
-  end
-
-  return base
-end
-
-function Helpers:StartsWith(str, start)
-  return str:sub(1, #start) == start
-end
-
-function Helpers:EndsWith(str, ending)
-  return ending == "" or str:sub(-#ending) == ending
-end
 
 function addon:OnInitialize()
-  self:Print("=========== VikingHud INITIALIZE ==========")
-  addon:SetChatBackgrounds()
+  VSL:Print("=========== VikingHud INITIALIZE ==========")
+  -- addon:SetChatBackgrounds()
   addon.Settings:OnLoad()
   addon.Options:OnLoad()
-  addon.Events:OnLoad()
 
   local frame = MainFrame:Super(MainFrame):New(UIParent)
   frame:SetPoint("TOP", UIParent, "BOTTOM", addon.Settings.db.profile.positionX, addon.Settings.db.profile.positionY)
@@ -37,12 +20,13 @@ function addon:OnInitialize()
   --   bgFile = LSM:Fetch("background", "Solid"),
   --   insets = { left = -1, right = -1, top = -1, bottom = -1}
   -- })
-  -- frame:SetBackdropColor(addon.Colors:NewRGBA(addon.Colors.BG, 0.8):ToList())
+  -- frame:SetBackdropColor(VSL.Colors:NewRGBA(VSL.Colors.BG, 0.8):ToList())
   --@debug end@
 
   self.playerUnitFrame = addon.PlayerUnitFrame:New(frame, "LEFT", "player")
   self.targetUnitFrame = addon.PlayerUnitFrame:New(frame, "LEFT", "target")
   self.targetTargetUnitFrame = addon.TargetUnitFrame:New(self.targetUnitFrame, "LEFT", "targettarget")
+  addon.Events:OnLoad()
 
   local DRAGGABLE_FRAMES = {
     LootFrame = nil,
@@ -69,6 +53,7 @@ end
 function addon:UpdateFont()
   self.playerUnitFrame:UpdateFont()
   self.targetUnitFrame:UpdateFont()
+  self.targetTargetUnitFrame:UpdateFont()
 end
 
 function addon:UpdatePosition()
@@ -83,7 +68,7 @@ function addon:UpdateSize()
   self.targetTargetUnitFrame:UpdateSize()
 end
 
-function addon:UpdateTargetText()
+function addon:UpdateTargetText(unitID)
   -- if (UnitExists("target")) then
   --   self.targetText:Show()
   -- else
@@ -122,12 +107,13 @@ function addon:UpdateTargetText()
       return ""
     end
   })
-  local class = UnitClass("target")
-  local icon = RAID_ICONS[GetRaidTargetIndex("target")]
+
+  local class = UnitClass(unitID)
+  local icon = RAID_ICONS[GetRaidTargetIndex(unitID)]
   local classIcon = CLASS_ICONS[class]
-  local name = UnitName("target")
-  local level = UnitLevel("target")
-  local classification = UnitClassification("target")
+  local name = UnitName(unitID)
+  local level = UnitLevel(unitID)
+  local classification = UnitClassification(unitID)
 
   local msg = level
   if classification ==  "worldboss" then
@@ -142,36 +128,15 @@ function addon:UpdateTargetText()
   elseif classification == "trivial" then
   end
 
-  self.targetUnitFrame:SetTargetText(
+  (unitID == "target" and self.targetUnitFrame or self.targetTargetUnitFrame):SetTargetText(
     icon ..
-    classIcon ..
+    VSL.Colors:NewDifficultyColor(level):ToText() ..
+    ((tonumber(level) > 0) and msg or "??") .. "|r " ..
     (name or "") .. " " ..
-    addon.Colors:NewDifficultyColor(level):ToText() ..
-    ((tonumber(level) > 0) and msg or "??") .. "|r"
+    classIcon
   )
 end
 
-function addon:Print(...)
-  local color = addon.Colors:NewRGBA(addon.Colors.YELLOW, 1):ToText()
-  print(color .. addonName .. ":|r", ...)
-end
-
-function addon:Debug(strName, tData)
-  if ViragDevTool_AddData then
-    ViragDevTool_AddData(tData, strName)
-  end
-end
-
-function addon:SetChatBackgrounds()
-  for i = 1, NUM_CHAT_WINDOWS do
-    local frame = _G["ChatFrame"..i]
-    -- frame:SetBackdrop({
-    --   bgFile = LSM:Fetch("background", "Solid"),
-    --   insets = { left = -1, right = -1, top = -1, bottom = -1}
-    -- })
-    frame.Background:SetVertexColor(addon.Colors:NewRGBA(addon.Colors.BG, 0.8):ToList())
-  end
-end
 
 function addon:HookDrag(frame, parent)
   local draggableFrame = parent or frame
