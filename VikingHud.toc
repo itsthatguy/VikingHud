@@ -2,7 +2,7 @@
 ## Title: Viking HUD
 ## Notes: Vikinghug is your King!
 ## Author: Vikinghug
-## Version: 0.1.4
+## Version: 0.1.5
 ## Dependencies: VikingSharedLib
 ## SavedVariablesPerCharacter: VikingHudDB
 ## X-Category: Unit Frames, HUDs, Addon
