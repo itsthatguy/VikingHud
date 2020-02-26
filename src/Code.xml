@@ -9,7 +9,6 @@
     <Script file="Options.lua" />
     <Script file="Events.lua" />
     <Script file="Core.lua" />
-    <Script file="AddonOverrides\masque_skin\masque.lua" />
 
     <!-- Frames -->
     <Script file="Frames\PlayerUnitFrame.lua" />
