@@ -1,0 +1,16 @@
+package-as: KillerCupcakes
+enable-nolib-creation: no
+
+ignore: # Files and directories beginning with a dot (such as .git) are automatically ignored, as is the pgkmeta file itself.
+    - preview-settings.JPG
+    - preview-square.jpg
+    - preview.JPG
+    - preview.png
+
+required-dependencies:
+    - 221710-dear-cupcake
+
+optional-dependencies:
+    - 220002-junkit
+
+manual-changelog: Changelog.txt
