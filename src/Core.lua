@@ -76,15 +76,15 @@ function addon:UpdateTargetText(unitID)
   -- end
 
   local CLASS_ICONS = {
-    Druid = "|TInterface\\Addons\\VikingHud\\assets\\textures\\druid.tga:0|t ",
-    Hunter = "|TInterface\\Addons\\VikingHud\\assets\\textures\\hunter.tga:0|t ",
-    Mage = "|TInterface\\Addons\\VikingHud\\assets\\textures\\mage.tga:0|t ",
-    Paladin = "|TInterface\\Addons\\VikingHud\\assets\\textures\\paladin.tga:0|t ",
-    Priest = "|TInterface\\Addons\\VikingHud\\assets\\textures\\priest.tga:0|t ",
-    Rogue = "|TInterface\\Addons\\VikingHud\\assets\\textures\\rogue.tga:0|t ",
-    Shaman = "|TInterface\\Addons\\VikingHud\\assets\\textures\\shaman.tga:0|t ",
-    Warlock = "|TInterface\\Addons\\VikingHud\\assets\\textures\\warlock.tga:0|t ",
-    Warrior = "|TInterface\\Addons\\VikingHud\\assets\\textures\\warrior.tga:0|t ",
+    Druid = "|TInterface\\Addons\\VikingSharedLib\\assets\\textures\\druid.tga:0|t ",
+    Hunter = "|TInterface\\Addons\\VikingSharedLib\\assets\\textures\\hunter.tga:0|t ",
+    Mage = "|TInterface\\Addons\\VikingSharedLib\\assets\\textures\\mage.tga:0|t ",
+    Paladin = "|TInterface\\Addons\\VikingSharedLib\\assets\\textures\\paladin.tga:0|t ",
+    Priest = "|TInterface\\Addons\\VikingSharedLib\\assets\\textures\\priest.tga:0|t ",
+    Rogue = "|TInterface\\Addons\\VikingSharedLib\\assets\\textures\\rogue.tga:0|t ",
+    Shaman = "|TInterface\\Addons\\VikingSharedLib\\assets\\textures\\shaman.tga:0|t ",
+    Warlock = "|TInterface\\Addons\\VikingSharedLib\\assets\\textures\\warlock.tga:0|t ",
+    Warrior = "|TInterface\\Addons\\VikingSharedLib\\assets\\textures\\warrior.tga:0|t ",
   }
   setmetatable(CLASS_ICONS, {
     __index = function()
