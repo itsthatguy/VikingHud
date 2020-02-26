@@ -1,9 +1,11 @@
 ## Interface: 11303
-## Title: VikingHud!
+## Title: Viking HUD
 ## Notes: Vikinghug is your King!
+## Author: Vikinghug
+## Version: 0.1.3
 ## Dependencies: VikingSharedLib
 ## SavedVariablesPerCharacter: VikingHudDB
-## Version: 0.1.2
+## X-Category: Unit Frames, HUDs, Addon
 
 libs\Libs.xml
 src\localization\localization.xml
