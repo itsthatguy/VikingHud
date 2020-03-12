@@ -2,7 +2,7 @@
 ## Title: Viking HUD
 ## Notes: Minimal player/target frames, designed for those that appreciate good UX/Design
 ## Author: Vikinghug
-## Version: 0.1.9
+## Version: 0.1.10
 ## Dependencies: VikingSharedLib
 ## SavedVariablesPerCharacter: VikingHudDB
 ## X-Category: Unit Frames, HUDs, Addon
