@@ -1,5 +1,8 @@
-local LSM = LibStub("LibSharedMedia-3.0")
-local VSL = LibStub("VikingSharedLib")
+
+local VSL = LibStub("VikingSharedLib", true)
+if not VSL then return end
+
+-- local LSM = LibStub("LibSharedMedia-3.0")
 local Taka = LibStub("Taka-0.0")
 local MainFrame = Taka:NewClass("Frame", "VH_MainFrame")
 
