@@ -51,7 +51,7 @@ function PlayerUnitFrame:New(parent, side, unitID)
     --   insets = { left = -1, right = -1, top = -1, bottom = -1}
     -- })
     -- frame:SetBackdropColor(VSL.Colors:NewRGBA(VSL.Colors[unitID == "target" and "CYAN" or "YELLOW"], 0.8):ToList())
-    --@debug end@
+    --@end-debug@
 
   if (unitID == "target") then
     frame.portrait = CreateFrame("PlayerModel", nil, frame.health)

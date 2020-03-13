@@ -435,14 +435,12 @@ function Options:OnLoad()
 
   --@debug@
   -- AceConfig:RegisterOptionsTable(addonName .. ".model", modelOptions, {"model"})
-  --@debug end@
+  --@end-debug@
 end
 
 -- function Options:OpenModelOptions()
---   --@debug@
 --   if not AceConfigDialog.OpenFrames[addonName .. ".model"] then
 --     AceConfigDialog:Open(addonName .. ".model")
 --   end
---   --@debug end@
 -- end
 

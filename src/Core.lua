@@ -24,7 +24,7 @@ function addon:OnInitialize()
   --   insets = { left = -1, right = -1, top = -1, bottom = -1}
   -- })
   -- frame:SetBackdropColor(VSL.Colors:NewRGBA(VSL.Colors.BG, 0.8):ToList())
-  --@debug end@
+  --@end-debug@
 
   self.playerUnitFrame = addon.PlayerUnitFrame:New(frame, "LEFT", "player")
   self.targetUnitFrame = addon.PlayerUnitFrame:New(frame, "LEFT", "target")

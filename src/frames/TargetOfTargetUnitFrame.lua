@@ -38,7 +38,7 @@ local function new(parent, side, unitID)
   --   insets = { left = -1, right = -1, top = -1, bottom = -1}
   -- })
   -- frame:SetBackdropColor(VSL.Colors:NewRGBA(VSL.Colors.GREEN, 0.8):ToList())
-  --@debug end@
+  --@end-debug@
 
   frame.health = addon.PlayerHealthFrame:New(frame.container, "RIGHT", frame.unitID)
   frame.mana = addon.PlayerPowerFrame:New(frame.container, "RIGHT", frame.unitID, 0)
