@@ -1,0 +1,5 @@
+package-as: VikingHud
+enable-nolib-creation: no
+
+required-dependencies:
+    - vikingsharedlib
